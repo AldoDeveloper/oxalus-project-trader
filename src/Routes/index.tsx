@@ -8,6 +8,8 @@ import ResetPassword from '../app/Auth/ResetPassword';
 import { ActionLogin } from '../app/Action/Index';
 import Dasboard_v1 from '../app/Dasboard/Dasboard_v1';
 import { LoaderAuth } from '../app/Loader/indexLoader';
+import Profile from '../app/Component/Auth/Profile';
+import { LayoutDasboard } from '../app/Dasboard/LayoutDasboard';
 
 const Routerd  = createBrowserRouter([
     {
@@ -45,7 +47,18 @@ const Routerd  = createBrowserRouter([
             },
             {
                 path: 'dasboard',
-                element: <Dasboard_v1/>
+                element: <LayoutDasboard/>,
+                errorElement: <ErrorAuth/>,
+                children:[
+                    {
+                        index: true,
+                        element: <Dasboard_v1/>
+                    },
+                    {
+                        path: 'profile',
+                        element: <Profile/>
+                    }
+                ]
             },
             {
                 path: 'subscribtion',

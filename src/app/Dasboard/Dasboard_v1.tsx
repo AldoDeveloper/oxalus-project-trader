@@ -17,14 +17,7 @@ export default class Dasboard_v1 extends React.Component<any, StateComponentDasb
         // console.log(loaderAuth.users.subscription_active)
         // if(loaderAuth.users.subscription_active === undefined) return <Navigate to={'/subscribtion'}/>
         if(loaderAuth.auth){
-            return(
-                <>
-                    <div className="d-flex gap-3">
-                        <Sidebar/>
-                        <Content/>
-                    </div>
-                </>
-            )
+            return <Content/>
         }
         return<></>
     }

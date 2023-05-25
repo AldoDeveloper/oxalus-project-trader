@@ -35,7 +35,9 @@ export interface UserInfo{
 
 export interface LoaderPropsAuth{
     auth: boolean,
-    users: UserDataInfo,
+    users: {
+        data: UserDataInfo
+    },
 }
 
 export interface StateComponentDasboard{
