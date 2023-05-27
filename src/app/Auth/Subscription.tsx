@@ -7,6 +7,7 @@ import { stringConversionSubs } from "../Helpers/StringConvertion";
 import * as Icons from 'react-icons/bs';
 import ModalPayment from "../Component/Modal/ModalPayment";
 import { processSubscribtions } from "../Api/ApiResource";
+import { SubscriptionContext } from "../Context/AuthContext";
 
 export default class Subscription extends React.Component<any, 
     {
@@ -29,7 +30,8 @@ export default class Subscription extends React.Component<any,
         this.AlertSubscribtion = this.AlertSubscribtion.bind(this);
     }
 
-    protected handleClickModal(props: boolean, data?: DataListSubscribtion){
+    protected handleClickModal(props: boolean, data?: DataListSubscribtion, tokens?: string){
+        console.log(tokens)
         this.setState({modal: props, data_modal: data})
     }
 
@@ -128,16 +130,18 @@ export default class Subscription extends React.Component<any,
         const { modal, data_modal} = this.state;
         return(
             <>
-               <SlideAnimate>
-                    <div className="container-fluid row mt-3 mb-3 g-3">
-                       <this.AlertSubscribtion/>
-                       <this.getLoaderData/>
-                       <ModalPayment 
-                        konditions={modal} 
-                        callbackHandle={this.handleClickModal} 
-                        data={data_modal}/>
-                    </div>
-               </SlideAnimate>
+              <SubscriptionContext.Provider value={{name: true} as any}>
+                    <SlideAnimate>
+                        <div className="container-fluid row mt-3 mb-3 g-3">
+                        <this.AlertSubscribtion/>
+                        <this.getLoaderData/>
+                        <ModalPayment 
+                            konditions={modal} 
+                            callbackHandle={this.handleClickModal} 
+                            data={data_modal}/>
+                        </div>
+                </SlideAnimate>
+              </SubscriptionContext.Provider>
             </>
         )
     }

@@ -6,6 +6,14 @@ interface Login{
     password?: string,
 }
 
+interface RegisterData{
+    name?: string,
+    email?: string,
+    password?: string,
+    confirm_password?:string,
+    country: string
+ }
+
 async function ApiFetchLogin(bodys: Login){
     const loginFetch = await fetch(`${dev_api.API_URL}api/member/login`, {
     method: 'POST',
@@ -17,6 +25,19 @@ async function ApiFetchLogin(bodys: Login){
     signal: AbortSignal.timeout(15000)
     })
     return loginFetch;
+}
+
+async function ApiFetchRegister(bodys: RegisterData){
+    const registerFetch = await fetch(`${dev_api.API_URL}api/member/register`, {
+    method: 'POST',
+    headers: new Headers({
+        'Content-Type': 'application/json',
+        'x-api-key'   :  dev_api?.API_KEY,
+    }),
+    body: JSON.stringify(bodys),
+    signal: AbortSignal.timeout(15000)
+    })
+    return registerFetch;
 }
 
 async function ApiFetchAuth(data: PropsData){
@@ -34,7 +55,7 @@ async function ApiFetchAuth(data: PropsData){
 async function getListSubscribtion(props: LoaderListSubscribtion){
     try{
         const jsonObjectAuth = JSON.parse(window.localStorage.getItem('login_web') as string);
-        const getListPayment = await fetch(`https://api.oxalus.trade/api/subscription/listavailablepackage`, {
+        const getListPayment = await fetch(`${dev_api.API_URL}/api/subscription/listavailablepackage`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type'  : 'Application/json',
@@ -63,4 +84,4 @@ async function processSubscribtions(tokens: string, body: any) : Promise<Respons
     return postProcess;
 }
 
-export { ApiFetchLogin, ApiFetchAuth, getListSubscribtion, processSubscribtions }
+export { ApiFetchLogin, ApiFetchAuth, getListSubscribtion, processSubscribtions, ApiFetchRegister }

@@ -31,16 +31,15 @@ export default function Country(){
             setController({loading: true, error: error})
        }
     }, []);
-    if(!controller.loading){
-        return <option value="">Loading....</option>
-    }else if(controller.error){
-        throw new Error('Error Get Data Country')
-    }else{
+
+    if(!controller.loading) return <option value="">Loading....</option>
+    else if(controller.error) throw new Error('Error Get Data Country')
+    else{
         return(
             <>
                {
                     controller.data?.map((val: any, idx) => {
-                      return <option key={idx} value="">{val?.name?.common}</option>
+                      return <option key={idx} value={val?.name?.common.toLocaleLowerCase()}>{val?.name?.common}</option>
                     })
                }
             </>
