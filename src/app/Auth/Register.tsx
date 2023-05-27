@@ -1,4 +1,6 @@
 import React from "react";
+import { Form } from "react-bootstrap";
+import Country from "../List/Country";
 
 export default class Register extends React.Component<any>{
 
@@ -34,6 +36,10 @@ export default class Register extends React.Component<any>{
                              <label className="form-label float-start">Confirm Password</label>
                              <input type="Password" className='form-control form-control-lg' />
                         </div>
+                        <label className="form-label float-start">Country</label>
+                        <Form.Select aria-label="Default select example" size="lg" className="mb-3">
+                            <Country/>
+                        </Form.Select>
                         <div className="form-check mb-3">
                             <input type="checkbox" className='form-check-input' />
                             <label className="form-check-label">I have read and agree to the</label>

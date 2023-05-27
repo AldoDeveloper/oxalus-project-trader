@@ -40,6 +40,26 @@ export interface LoaderPropsAuth{
     },
 }
 
+export interface LoaderListSubscribtion{
+    request: any,
+    params: any,
+}
+
+export interface DataListSubscribtion{
+    benefit: string,
+    description_package: string,
+    duration_package: string,
+    id_package: string,
+    price_package: string
+}
+
+export interface ObjectListSubscribtion{
+    data: DataListSubscribtion[],
+    error: boolean,
+    message:any,
+    status: number
+}
+
 export interface StateComponentDasboard{
     
 }

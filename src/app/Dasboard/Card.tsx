@@ -1,4 +1,6 @@
 
+import chartSvg from '../../assets/svg_graps.svg';
+
 export default function Card() {
     return (
         <>
@@ -14,7 +16,7 @@ export default function Card() {
                                 <h3 className="mb-0">4.2m</h3>
                             </div>
                             <div className="col-5">
-                                <div className="mt-n2" data-render="apexchart" data-type="bar" data-title="Visitors" data-height="30"></div>
+                                <img src={chartSvg} alt="" />
                             </div>
                         </div>
                         <div className="small text-inverse text-opacity-50 text-truncate">

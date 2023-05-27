@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LayoutRoutes from './LayoutRoutes';
-import MainAuth from '../app/Auth/Main';
 import { Logins } from '../app/Auth/Login';
 import ErrorAuth from '../app/Error/ErrorAuth';
 import Register from '../app/Auth/Register';
@@ -10,6 +9,9 @@ import Dasboard_v1 from '../app/Dasboard/Dasboard_v1';
 import { LoaderAuth } from '../app/Loader/indexLoader';
 import Profile from '../app/Component/Auth/Profile';
 import { LayoutDasboard } from '../app/Dasboard/LayoutDasboard';
+import Subscription from '../app/Auth/Subscription';
+import { dev_api } from '../config/config';
+import { getListSubscribtion } from '../app/Api/ApiResource';
 
 const Routerd  = createBrowserRouter([
     {
@@ -57,13 +59,15 @@ const Routerd  = createBrowserRouter([
                     {
                         path: 'profile',
                         element: <Profile/>
+                    },
+                    {
+                        path: 'subscription',
+                        id: 'list_sub',
+                        loader: getListSubscribtion,
+                        element: <Subscription/>
                     }
                 ]
             },
-            {
-                path: 'subscribtion',
-                element: <h1>Payment</h1>
-            }
         ]
     }
 ]);

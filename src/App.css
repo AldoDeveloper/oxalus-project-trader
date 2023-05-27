@@ -6,6 +6,9 @@
 *{
     font-family: Chakra;
 }
+body{
+    overflow-x: hidden;
+}
 
 [data-bs-theme=dark]{
     background-image: url('./assets/img/pattern-dark.png');
@@ -211,9 +214,10 @@
     /* overflow-y: scroll; */
 }
 .content{
-    height: 100%;
+    width: 100%;
+    height: 90vh;
     background-color: transparent;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
 }
 .sidebar .menu{
     position: relative;
@@ -252,3 +256,15 @@
     z-index: 9999;
     color: white;
   }
+  
+  ul {
+    --icon-size: .8em;
+    --gutter: .5em;
+    padding: 0 0 0 var(--icon-size);
+  }
+  
+  ul li {
+    padding-left: var(--gutter);
+    list-style-type: none;
+  }
+  

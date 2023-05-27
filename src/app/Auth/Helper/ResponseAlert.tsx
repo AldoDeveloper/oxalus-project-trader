@@ -3,21 +3,16 @@ import { motion } from 'framer-motion';
 
 interface PropInterface{
     response:{
-        status: number,
-        message: string,
-        error: boolean,
-        data?: any
+        status  : number,
+        message : string,
+        error   : boolean,
+        data?   : any
     }
 }
+
 const OptionsAnimate = {
-    show:{
-        opacity:1,
-        y:0,
-    },
-    hidde:{
-        opacity: 0,
-        y:50
-    }
+    show: { opacity: 1,  y: 0 },
+    hidde:{ opacity: 0,  y: 50 }
 }
 
 export default class AlertOxalus extends React.Component<PropInterface>{
