@@ -4,7 +4,7 @@ import { Logins } from '../app/Auth/Login';
 import ErrorAuth from '../app/Error/ErrorAuth';
 import Register from '../app/Auth/Register';
 import ResetPassword from '../app/Auth/ResetPassword';
-import { ActionLogin } from '../app/Action/Index';
+import { ActionLogin, ActionRegister } from '../app/Action/Index';
 import Dasboard_v1 from '../app/Dasboard/Dasboard_v1';
 import { LoaderAuth } from '../app/Loader/indexLoader';
 import Profile from '../app/Component/Auth/Profile';
@@ -37,6 +37,7 @@ const Routerd  = createBrowserRouter([
                     },
                     {
                         path: 'register',
+                        action: ActionRegister,
                         element: <Register/>,
                         errorElement: <ErrorAuth/>
                     },

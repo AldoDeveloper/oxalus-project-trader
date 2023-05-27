@@ -267,4 +267,15 @@ body{
     padding-left: var(--gutter);
     list-style-type: none;
   }
+
+  .icons{
+     display: none;
+     position: absolute;
+     top: -15px;
+     right: -10px;
+  }
+
+  .icons.act{
+     display: block;
+  }
   
