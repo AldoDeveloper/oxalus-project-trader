@@ -52,6 +52,21 @@ async function ApiFetchAuth(data: PropsData){
     return infoAuth;
 }
 
+async function statusPayment(id: string, tokens: string){
+    const bodys = { id_ref : id };
+    const fetchStatusPayment =await fetch(`${dev_api.API_URL}api/subscription/statuspayment`, {
+        method: 'POST',
+        headers: new Headers({
+            'Content-type'  : 'application/json',
+            'x-api-key'     : dev_api.API_KEY,
+            'AUTHORIZATION' : 'Bearer ' + tokens,
+        }),
+        body: JSON.stringify(bodys),
+        signal: AbortSignal.timeout(15000)
+    });
+    return fetchStatusPayment;
+}
+
 async function getListSubscribtion(props: LoaderListSubscribtion){
     try{
         const jsonObjectAuth = JSON.parse(window.localStorage.getItem('login_web') as string);
@@ -84,4 +99,24 @@ async function processSubscribtions(tokens: string, body: any) : Promise<Respons
     return postProcess;
 }
 
-export { ApiFetchLogin, ApiFetchAuth, getListSubscribtion, processSubscribtions, ApiFetchRegister }
+async function ResetPasswordEmail(body: any){
+    const postProcess = await fetch(`${dev_api.API_URL}api/member/sendResetPassword`, {
+        method: 'POST',
+        headers: new Headers({
+            'Content-Type' : 'application/json',
+            'x-api-key'    : dev_api.API_KEY
+        }),
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(15000)
+    });
+    return postProcess;
+}
+
+export { 
+    ApiFetchLogin, 
+    ApiFetchAuth, 
+    getListSubscribtion, 
+    processSubscribtions, 
+    ApiFetchRegister,
+    statusPayment,
+    ResetPasswordEmail}

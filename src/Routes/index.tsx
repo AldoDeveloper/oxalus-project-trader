@@ -12,6 +12,9 @@ import { LayoutDasboard } from '../app/Dasboard/LayoutDasboard';
 import Subscription from '../app/Auth/Subscription';
 import { dev_api } from '../config/config';
 import { getListSubscribtion } from '../app/Api/ApiResource';
+import PaymentIntruction from '../app/Auth/PaymentIntruction';
+import FindSignal from '../app/Auth/FindSignal';
+import Setting from '../app/Auth/Setting';
 
 const Routerd  = createBrowserRouter([
     {
@@ -66,6 +69,18 @@ const Routerd  = createBrowserRouter([
                         id: 'list_sub',
                         loader: getListSubscribtion,
                         element: <Subscription/>
+                    },
+                    {
+                        path: 'setting',
+                        element: <Setting/>
+                    },
+                    {
+                        path: 'find/signal',
+                        element: <FindSignal/>
+                    },
+                    {
+                        path: 'payment-inturction',
+                        element: <PaymentIntruction/>
                     }
                 ]
             },

@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import { Button, Spinner } from "react-bootstrap";
+import React from "react";
+import { Button } from "react-bootstrap";
 import { SlideAnimate } from "../Animate/AnimateRoutes";
 import { useRouteLoaderData } from "react-router-dom";
 import { DataListSubscribtion, LoaderPropsAuth, ObjectListSubscribtion } from "../interface/Props";
@@ -7,6 +7,7 @@ import { stringConversionSubs } from "../Helpers/StringConvertion";
 import * as Icons from 'react-icons/bs';
 import ModalPayment from "../Component/Modal/ModalPayment";
 import { SubscriptionContext } from "../Context/AuthContext";
+import Skelton from 'react-loading-skeleton';
 
 export default class Subscription extends React.Component<any, 
     {
@@ -23,27 +24,21 @@ export default class Subscription extends React.Component<any,
     public constructor(props: any){
         super(props);
         this.state = { modal : false, process_subscribtions: {loading: false, error: null, data: null} };
-        this.getLoaderData    = this.getLoaderData.bind(this);
-        this.handleClickModal = this.handleClickModal.bind(this);
-        this.handleGetApiSubscribtion = this.handleGetApiSubscribtion.bind(this);
-        this.AlertSubscribtion = this.AlertSubscribtion.bind(this);
+        this.getLoaderData      = this.getLoaderData.bind(this);
+        this.handleClickModal   = this.handleClickModal.bind(this);
+        this.AlertSubscribtion  = this.AlertSubscribtion.bind(this);
+        this.handleClickRefresh = this.handleClickRefresh.bind(this);
     }
 
-    protected handleClickModal(props: boolean, data?: DataListSubscribtion, tokens?: string){
-        console.log(tokens)
+    protected handleClickModal(props: boolean, data?: DataListSubscribtion){
         this.setState({modal: props, data_modal: data})
     }
 
-    protected handleGetApiSubscribtion(props: LoaderPropsAuth){
-        // (async() =>{
-        //     try{
-        //         const getResponsesApi= await processSubscribtions()
-        //     }
-        //     catch(error){
-
-        //     }
-        // })();
+    protected handleClickRefresh(props: boolean, callback: any){
+        this.setState({modal: props});
+        callback({dataRequest: undefined});
     }
+
     protected AlertSubscribtion() :JSX.Element{
         const getLoader: ObjectListSubscribtion = useRouteLoaderData('list_sub') as ObjectListSubscribtion;
         if(getLoader.message !== null){
@@ -57,8 +52,8 @@ export default class Subscription extends React.Component<any,
     }
 
     private getLoaderData() : JSX.Element{
-        const userAuth : LoaderPropsAuth = useRouteLoaderData('autho') as LoaderPropsAuth;
-        const getLoader: ObjectListSubscribtion = useRouteLoaderData('list_sub') as ObjectListSubscribtion;
+        const userAuth  : LoaderPropsAuth = useRouteLoaderData('autho') as LoaderPropsAuth;
+        const getLoader : ObjectListSubscribtion = useRouteLoaderData('list_sub') as ObjectListSubscribtion;
         return(
             <>
                 {
@@ -70,7 +65,7 @@ export default class Subscription extends React.Component<any,
                                 </div>
                                 <div className="card-body">
                                 <div style={{ fontSize: '32px' }} className="text-center">
-                                    ${ subscription.price_package }<sub>/ Month</sub>
+                                    ${ subscription.price_package || <Skelton/> }<sub>/ Month</sub>
                                 </div>
                                 <div className="description mt-3">
                                     <ul>
@@ -136,10 +131,10 @@ export default class Subscription extends React.Component<any,
                         <this.getLoaderData/>
                         <ModalPayment 
                             konditions={modal} 
-                            callbackHandle={this.handleClickModal} 
+                            callbackHandle={this.handleClickRefresh} 
                             data={data_modal}/>
                         </div>
-                </SlideAnimate>
+                    </SlideAnimate>
               </SubscriptionContext.Provider>
             </>
         )

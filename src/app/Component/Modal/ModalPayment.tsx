@@ -5,6 +5,9 @@ import React from "react";
 import * as Icons from 'react-icons/bs';
 import { AuthContext } from "../../Context/AuthContext";
 import {toast} from 'react-toastify';
+import { dev_api } from "../../../config/config";
+import { Navigate } from "react-router-dom";
+import { statusPayment } from "../../Api/ApiResource";
 
 export default function ModalPayment(props: 
     {
@@ -31,12 +34,21 @@ export default function ModalPayment(props:
             class: 'btn-outline-success'
         }
     ]
-    const [status, setStatusChekbox] = React.useState<{checked?: boolean, data_select?: {}}>({checked: false});
-    const [process, setProcess]      = React.useState<{loading?: boolean, redirect?: boolean, data?:any}>(
-        {loading: false, redirect: false, data: {}}
+    const [status, setStatusChekbox] = React.useState<{checked?: boolean}>({checked: false});
+    const [data, setData] = React.useState<{dataRequest: any}>();
+
+    const [process, setProcess] = React.useState<
+    {
+        loading?: boolean,
+        redirect?: boolean,
+        data?:any,
+        status?: any,
+        error?: any
+    }>(
+        {loading: false, redirect: false, data: {}, error: null}
     );
 
-    const authTokens = React.useContext(AuthContext);
+    const authTokens: any = React.useContext(AuthContext) as any;
     const handleCheckboxModal = async (event: React.MouseEvent<HTMLInputElement, MouseEvent> | any) =>{
         setStatusChekbox({checked: event.target?.checked});
     }
@@ -48,24 +60,70 @@ export default function ModalPayment(props:
         })
         const iconsData = event.target.querySelector('.icons');
         iconsData.classList.add('act');
-        setStatusChekbox({data_select: data});
+        setData({dataRequest: data})
     }
-    
-    console.log(status.data_select)
+
     const HandleGetProses = async () =>{
-        if(status.data_select === undefined){
+        if(data?.dataRequest === undefined){
            toast.error('Select Your Button Click', {
             type: 'error',
             theme: 'dark',
             autoClose: 3000,
            })
         }
+        if(data?.dataRequest?.status !== undefined){
+            toast.dismiss('current');
+        }
+        else
+        {
+            try
+                {
+                    const PostProcessTrade = await fetch(`${dev_api.API_URL}api/subscription/process`, {
+                        method: 'POST',
+                        headers: new Headers({
+                            'content-type'  : 'application/json',
+                            'x-api-key'     : dev_api.API_KEY,
+                            'AUTHORIZATION' : 'Bearer ' + authTokens?.token,
+                        }),
+                        body: JSON.stringify(data?.dataRequest),
+                        signal: AbortSignal.timeout(15000)
+                    });
+
+                    if(PostProcessTrade.status === 200){
+                        const responseDataJson = await PostProcessTrade.json();
+                        try
+                            {
+                                const statusPaymentData = await statusPayment(responseDataJson?.data.id_ref, authTokens?.token);
+                                if(statusPaymentData.status === 200){
+                                    const resposnseStatusData = await statusPaymentData.json();
+                                    setProcess({
+                                        loading: true, 
+                                        redirect: true, 
+                                        data: responseDataJson, 
+                                        status: resposnseStatusData})
+                                }
+                                if(statusPaymentData.status >= 400){
+                                    console.log(await statusPaymentData.json());
+                                }
+                            }
+                        catch(error){
+                            console.log(error)
+                        }
+                    }
+                }
+                catch(error){
+                    setProcess({loading: true, redirect: false, error: error})
+                }
+            }
+        }
+    if(process.redirect){
+        return <Navigate to={'/dasboard/payment-inturction'} state={process}/>
     }
     return(
         <>
              <Modal
                 show={props.konditions}
-                onHide={async() => props.callbackHandle(false)}
+                onHide={async() => props.callbackHandle(false, setData)}
                 backdrop="static"
                 centered
                 keyboard={false}>
@@ -77,10 +135,10 @@ export default function ModalPayment(props:
                         {
                             SubscribtionSelect.map((values, idx) => (
                                 <button
-                                        onClick={async(event) => handleSelectList(event, values.data)} 
-                                        className={`btn ${values.class} btn-lg position-relative`}
-                                        key={idx} >
-                                        {values.text}
+                                    onClick={async(event) => handleSelectList(event, values.data)} 
+                                    className={`btn ${values.class} btn-lg position-relative`}
+                                    key={idx} >
+                                    {values.text}
                                     <div className="icons">
                                         <Icons.BsCheck size={'32px'} color="red"/>
                                     </div>
@@ -98,7 +156,7 @@ export default function ModalPayment(props:
                 </Modal.Body>
                 <Modal.Footer>
                     <Button 
-                        // disabled={status.checked} 
+                        disabled={!status.checked} 
                         onClick={async() => HandleGetProses()}
                         style={{ width: '120px' }}
                         className="float-end" 
