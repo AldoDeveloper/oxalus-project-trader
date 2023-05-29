@@ -6,7 +6,6 @@ import { DataListSubscribtion, LoaderPropsAuth, ObjectListSubscribtion } from ".
 import { stringConversionSubs } from "../Helpers/StringConvertion";
 import * as Icons from 'react-icons/bs';
 import ModalPayment from "../Component/Modal/ModalPayment";
-import { processSubscribtions } from "../Api/ApiResource";
 import { SubscriptionContext } from "../Context/AuthContext";
 
 export default class Subscription extends React.Component<any, 
