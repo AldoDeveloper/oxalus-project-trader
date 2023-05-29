@@ -1,5 +1,6 @@
 import React from 'react';
-import * as Icons from 'react-icons/bs'
+import * as Icons from 'react-icons/bs';
+import { NavLink } from 'react-router-dom';
 export default class Sidebar extends React.Component {
     render(): React.ReactNode {
         return (
@@ -9,16 +10,16 @@ export default class Sidebar extends React.Component {
                        <div className="menu">
                             <div className="menu-header">Navigation</div>
                             <div className="menu-item">
-                                <a href="#" className='menu-link'>
+                                <NavLink to={'/dasboard'} className='menu-link'>
                                     <span><Icons.BsCpu size={"17px"}/></span>
                                     <span>Dasboard</span>
-                                </a>
+                                </NavLink>
                             </div>
                             <div className="menu-item">
-                                <a href="#" className='menu-link'>
+                                <NavLink to={'/dasboard'} className='menu-link'>
                                     <span><Icons.BsBarChart size={"17px"}/></span>
-                                    <span>Analitic</span>
-                                </a>
+                                    <span>Subscribtion</span>
+                                </NavLink>
                             </div>
                             <div className="menu-item">
                                 <a href="#" className='menu-link'>

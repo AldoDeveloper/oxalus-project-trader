@@ -1,17 +1,25 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet, useRouteLoaderData } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
 import Sidebar from "./Sidebar";
+import { LoaderPropsAuth } from "../interface/Props";
 
 export function LayoutDasboard(){
+    const authoCheck = useRouteLoaderData('autho') as LoaderPropsAuth;
+    
+    if(!authoCheck.auth) return <Navigate to={'/auth/login'}/>
+
     return(
         <>
-            <div className="row g-3">
-                <div className="col col-lg-2 col-sm-4 col-xl-2" style={{overflowY: 'scroll'}}>
-                    <Sidebar/>
-                </div>
-                <div className="col col-lg-10 col-sm-9 col-xl-10 justify-content-start">
-                    <Outlet/>
-                </div>
-            </div>
+           <Container fluid>
+                <Row>
+                    <Col xs={2} lg={2} md={2} className="res">      
+                        <Sidebar />
+                    </Col>
+                    <Col xs={10} lg={10} md={10}>
+                         <Outlet/>
+                    </Col> 
+                </Row>
+            </Container>
         </>
     )
 }

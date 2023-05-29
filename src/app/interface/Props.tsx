@@ -60,6 +60,10 @@ export interface ObjectListSubscribtion{
     status: number
 }
 
+export interface PaginationCard{
+    page: number,
+}
+
 export interface StateComponentDasboard{
     
 }
