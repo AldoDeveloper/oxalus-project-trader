@@ -1,20 +1,19 @@
-import { Form, Navigate, Params, useActionData, useParams, useRouteLoaderData } from 'react-router-dom';
+import { Form, Link, Navigate, useActionData, useRouteLoaderData } from 'react-router-dom';
 import AlertOxalus from './Helper/ResponseAlert';
 
 export function Logins() {
-    const loaderCheck    : any = useRouteLoaderData('autho');
-    const responseAction : any = useActionData();
-    const params : Params<string> = useParams();
-    if(loaderCheck?.auth) return <Navigate to={'/dasboard'}/>
+    const loaderCheck: any = useRouteLoaderData('autho');
+    const responseAction: any = useActionData();
+    if (loaderCheck?.auth) return <Navigate to={'/dasboard'} />
 
-    function AlertNotifLogin() : JSX.Element | any{
-        if(responseAction === undefined) return;
-        return <AlertOxalus response={responseAction?.responseJson}/>
+    function AlertNotifLogin(): JSX.Element | any {
+        if (responseAction === undefined) return;
+        return <AlertOxalus response={responseAction?.responseJson} />
     }
     return (
         <>
-            <div 
-                style={{ height: '90vh' }} 
+            <div
+                style={{ height: '90vh' }}
                 className="d-flex justify-content-center align-items-center">
                 <Form action='/auth/login' method='POST'>
                     <div className="login">
@@ -24,7 +23,7 @@ export function Logins() {
                                 For your protection, please verify your identity.
                             </div>
                         </div>
-                        <AlertNotifLogin/>
+                        <AlertNotifLogin />
                         <div className='mb-4'>
                             <label className="form-label">Email Address</label>
                             <input type="text" name='email' className='form-control form-control-lg' />
@@ -41,10 +40,10 @@ export function Logins() {
                             <label className="form-check-label">Remember Me</label>
                         </div>
                         <button type='submit' className='btn btn-outline-theme btn-lg d-block w-100 fw-500 mb-3'>
-                            LOGIN
+                            SIGN IN
                         </button>
                         <div className="text-center text-inverse text-opacity-50">
-                            Don't have an account yet? <a href="page_register.html">Sign In</a>.
+                            Don't have an account yet? <Link to={'/auth/register'}>Sign Up</Link>.
                         </div>
                     </div>
                 </Form>

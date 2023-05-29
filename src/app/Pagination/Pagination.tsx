@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 
 function Pagination(props: { pages: number, setCurrentPage: any }) {
 
-  //Set number of pages
   const numberOfPages: any = []
   for (let i = 1; i <= props.pages; i++) {
     numberOfPages.push(i)
@@ -46,11 +45,6 @@ function Pagination(props: { pages: number, setCurrentPage: any }) {
     }
     
     else if (currentButton === dotsInitial) {
-      // [1, 2, 3, 4, "...", 10].length = 6 - 3  = 3 
-      // arrOfCurrButtons[3] = 4 + 1 = 5
-      // or 
-      // [1, 2, 3, 4, 5, "...", 10].length = 7 - 3 = 4
-      // [1, 2, 3, 4, 5, "...", 10][4] = 5 + 1 = 6
       setCurrentButton(arrOfCurrButtons[arrOfCurrButtons.length-3] + 1) 
     }
     else if (currentButton === dotsRight) {
@@ -69,6 +63,7 @@ function Pagination(props: { pages: number, setCurrentPage: any }) {
     <div className="pagination-container">
       <a
         href="#"
+        style={{borderRadius: '4px 0px 0px 4px'}}
         className={`${currentButton === 1 ? 'disabled' : ''}`}
         onClick={() => setCurrentButton(prev => prev <= 1 ? prev : prev - 1)}>
         Prev
@@ -85,6 +80,7 @@ function Pagination(props: { pages: number, setCurrentPage: any }) {
       }))}
       <a
         href="#"
+        style={{borderRadius: '0px 4px 4px 0px'}}
         className={`${currentButton === numberOfPages.length ? 'disabled' : ''}`}
         onClick={() => setCurrentButton(prev => prev >= numberOfPages.length ? prev : prev + 1)}>
         Next

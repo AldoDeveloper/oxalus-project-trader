@@ -2,12 +2,14 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { SlideAnimate } from "../Animate/AnimateRoutes";
 import { useRouteLoaderData } from "react-router-dom";
-import { DataListSubscribtion, LoaderPropsAuth, ObjectListSubscribtion } from "../interface/Props";
+import { DataListSubscribtion, ObjectListSubscribtion } from "../interface/Props";
 import { stringConversionSubs } from "../Helpers/StringConvertion";
 import * as Icons from 'react-icons/bs';
 import ModalPayment from "../Component/Modal/ModalPayment";
-import { SubscriptionContext } from "../Context/AuthContext";
+import { AuthContext, SubscriptionContext } from "../Context/AuthContext";
 import Skelton from 'react-loading-skeleton';
+import { dev_api } from "../../config/config";
+import CardSkeleton from "../Skeleton/SkeletonCard";
 
 export default class Subscription extends React.Component<any, 
     {
@@ -52,12 +54,38 @@ export default class Subscription extends React.Component<any,
     }
 
     private getLoaderData() : JSX.Element{
-        const userAuth  : LoaderPropsAuth = useRouteLoaderData('autho') as LoaderPropsAuth;
-        const getLoader : ObjectListSubscribtion = useRouteLoaderData('list_sub') as ObjectListSubscribtion;
+        const autho     : any = React.useContext(AuthContext);
+        const [subscribtion, setsubscribtion] = React.useState<{loading: boolean, data: any, error?: any}>({loading: false, data:[], error: null});
+    
+        React.useEffect(() =>{
+            setTimeout(async() =>{
+                try{
+                    const subscribtionActive = await fetch(`${dev_api.API_URL}api/subscription/listavailablepackage`, {
+                        method: 'GET',
+                        headers: new Headers({
+                            'Content-Type'  : 'application/json',
+                            'x-api-key'     : dev_api.API_KEY,
+                            'AUTHORIZATION' : 'Bearer ' + autho?.token
+                        }),
+                        signal: AbortSignal.timeout(15000)
+                    });
+                    if(subscribtionActive.status === 200){
+                        const responsesubscribtionActive = await subscribtionActive.json();
+                        setsubscribtion({loading: true, data: responsesubscribtionActive.data})
+                    }
+                }
+                catch(error){
+                    setsubscribtion({loading: true, data:[], error: error})
+                }
+             }, 2000);
+        }, [])
         return(
             <>
                 {
-                    getLoader.data.map((subscription, idx) =>(
+                    !subscribtion.loading && <CardSkeleton card={6} size={4}/>
+                }
+                {
+                   subscribtion.loading && subscribtion.data.map((subscription: any, idx:number) =>(
                         <div className="col col-lg-4 col-sm-6 col-md-6" key={idx}>
                             <div className="card">
                                 <div className="card-header text-center">
@@ -104,12 +132,6 @@ export default class Subscription extends React.Component<any,
                                      onClick={async() => this.handleClickModal(true, subscription)}
                                      style={{ width: '100px' }} 
                                      size="sm">
-                                        {/* <Spinner
-                                        as="span"
-                                        animation="border"
-                                        size="sm"
-                                        role="status"
-                                        aria-hidden="true"/> */}
                                         <span> Order</span></Button>
                                 </div>
                             </div>

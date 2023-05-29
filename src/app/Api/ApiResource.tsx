@@ -79,7 +79,7 @@ async function getListSubscribtion(props: LoaderListSubscribtion){
             }),
             signal: AbortSignal.timeout(15000)
         });
-        const response = await getListPayment.json();
+        const  response = await getListPayment.json();
         return response;
     }
     catch(error){

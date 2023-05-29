@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 export default function CardContent(props: {data: any}) {
     return (
         <>
-            <div className="col col-lg-4 col-xl-4 col-sm-4">
+            <div className="col-lg-12 col-xl-4 col-sm-4">
                 <NavLink to={'/dasboard/find/signal'} state={props.data} className={'text-decoration-none'}>
                     <div className="card mb-3" style={{ backgroundColor: 'transparent' }}>
                         <div className="card-body">
