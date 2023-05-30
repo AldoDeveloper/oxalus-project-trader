@@ -369,3 +369,15 @@ p{
        text-align: center;
     }
  }
+ .side-mobile{
+    display: inline-block;
+ }
+ .side-mobile li{
+    padding: 12px;
+    text-align: center;
+    list-style-type: none;
+    font-size: 18px;
+ }
+ .side-mobile a{
+    color: white;
+ }
