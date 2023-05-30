@@ -23,7 +23,9 @@ export default function Navbar() {
                         }
                     </div>
                     <div className="collapse navbar-collapse justify-content-end gap-3">
-                        <BadgesUsers usersAuth={userAuth}/>
+                        {
+                            userAuth?.auth && <BadgesUsers usersAuth={userAuth}/>
+                        }
                     </div>
                 </div>
             </nav>

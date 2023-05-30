@@ -14,7 +14,6 @@ import { getListSubscribtion } from '../app/Api/ApiResource';
 import PaymentIntruction from '../app/Auth/PaymentIntruction';
 import FindSignal from '../app/Auth/FindSignal';
 import Setting from '../app/Auth/Setting';
-import ElementIndex from './ElementIndex';
 
 const Routerd  = createBrowserRouter([
     {
@@ -26,15 +25,16 @@ const Routerd  = createBrowserRouter([
         children:[
             {
                 index: true,
-                element: <ElementIndex/>
+                element: <Logins/>,
+                errorElement: <ErrorAuth/>
             },
             {
                 path: 'auth',
-                errorElement: <h1>Errors...</h1>,
+                errorElement: <ErrorAuth/>,
                 children: [
                     {
                         index: true,
-                        element: <ElementIndex/>
+                        element: <Logins/>
                     },
                     {
                         path: 'login',
