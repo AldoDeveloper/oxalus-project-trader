@@ -10,7 +10,6 @@ import { LoaderAuth } from '../app/Loader/indexLoader';
 import Profile from '../app/Component/Auth/Profile';
 import { LayoutDasboard } from '../app/Dasboard/LayoutDasboard';
 import Subscription from '../app/Auth/Subscription';
-import { dev_api } from '../config/config';
 import { getListSubscribtion } from '../app/Api/ApiResource';
 import PaymentIntruction from '../app/Auth/PaymentIntruction';
 import FindSignal from '../app/Auth/FindSignal';

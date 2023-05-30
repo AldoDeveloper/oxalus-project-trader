@@ -25,6 +25,7 @@ export default class AlertOxalus extends React.Component<PropInterface>{
     }
 
     private HandleClick(props: any) {
+        props;
         async function PostVerifyEmail() {
             const email = window.localStorage.getItem('email');
             const post = await fetch(`${dev_api.API_URL}api/verification/sendagainmail`, {

@@ -2,7 +2,7 @@
 import React from 'react';
 import { dev_api } from '../../config/config';
 import { AuthContext } from '../Context/AuthContext';
-import { Col, Row } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import CardSkeleton from '../Skeleton/SkeletonCard';
 import CardContent from './Card';
 import Pagination from '../Pagination/Pagination';
