@@ -107,7 +107,7 @@ const Setting = () => {
             });
             return signalActive;
         }
-        const data = await toast.promise(Responses(), {
+        await toast.promise(Responses(), {
             pending: {
                 render() { return 'Loading Push Notification' },
                 theme: 'dark'
