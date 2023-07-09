@@ -185,6 +185,12 @@ body{
 .login{
     width: 400px;
 }
+@media screen and (max-width: 750px) {
+    .login{
+        width: 100%;
+        font-size: 14px;
+    }
+}
 .btn-outline-theme {
     outline-style: dotted;
     outline-width: 2px;
@@ -213,8 +219,8 @@ p{
 }
 .sidebar{
     position: fixed;
-    height: 89vh;
-    background-color: transparent;
+    height: 100%;
+    background-color: #0B2447;
 }
 .content{
     width: 100%;
@@ -226,16 +232,30 @@ p{
     padding: 1rem 1rem 0.5rem;
 }
 .sidebar .menu .menu-header {
-    font-size: .65625rem;
+    font-size: 1rem;
     font-weight: 600;
+    padding: 20px;
     color: var(--bs-app-sidebar-menu-header-color);
 }
 .sidebar .menu .menu-item .menu-link{
     display: flex;
+    padding: 14px;
     margin-top: 10px;
     gap: 22px;
+    font-size: 17px;
+    border-radius: 5px;
     color: var(--bs-app-sidebar-menu-link-active-color);
     text-decoration: none;
+    transition: 0.2s;
+}
+.menu-link.active{
+    background-color: #249d79;
+}
+.menu-link.pending{
+    opacity: 0.3;
+}
+.menu-link:hover{
+    background-color: #249d79;
 }
 .body-loader{
     position: fixed;
@@ -280,7 +300,7 @@ p{
   
 .pagination-container {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     width: 100%;
     font-weight: 500;
@@ -289,10 +309,10 @@ p{
   
   .pagination-container a {
     display: flex;
+    padding: 12px;
     justify-content: center;
     align-items: center;
-    color: black;
-    /* padding: 8px 14px; */
+    color: white;
     height: 40px;
     width: 40px;
     text-decoration: none;
@@ -302,12 +322,62 @@ p{
   }
   
   .pagination-container a.active {
-    background-color: #007bff;
+    background-color: #13DEB9;
     color: white;
     border: 1px solid #7cbddb;
   }
   
   .pagination-container a.disabled { 
-    opacity: 0.2;
+    opacity: 0.5;
   }
-  .pagination-container a:hover:not(.active) {background-color: rgb(238, 238, 238);}
+  .pagination-container a:hover:not(.active) {background-color: rgb(238, 238, 238); color: darkslategray;}
+
+  .error-page{
+    display: block;
+    position: relative;
+ }   
+ .error-page h1{
+    font-size: 12rem;
+ }
+
+ .list-side-nav{
+    /* justify-content: end; */
+    float: inline-end;
+    cursor: pointer;
+    display: none;
+ }
+ .mobile-sidenav{
+    position: absolute;
+    z-index: 1000;
+    background-color: #0B2447;
+    color: white;
+    height: 100%;
+ }
+
+ @media screen and (max-width: 1000px) {
+     .error-page h1{
+        font-size: 8rem;
+        text-align: center;
+     }
+     .list-side-nav{
+        display: block;
+     }
+  }
+  @media screen and (max-width: 500px) {
+    .error-page h1{
+       font-size: 4rem;
+       text-align: center;
+    }
+ }
+ .side-mobile{
+    display: inline-block;
+ }
+ .side-mobile li{
+    padding: 12px;
+    text-align: center;
+    list-style-type: none;
+    font-size: 18px;
+ }
+ .side-mobile a{
+    color: white;
+ }

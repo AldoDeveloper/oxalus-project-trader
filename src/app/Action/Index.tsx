@@ -11,7 +11,10 @@ async function ActionLogin(props: LoginActionProps){
          const Apis = ApiFetchLogin(body)
          const useLoading   = await LoadingPromise(Apis, 'Login Success');
          const responseJson = await useLoading.json();
-         if(responseJson?.status >= 400) return { responseJson };
+         if(responseJson?.status >= 400){
+            window.localStorage.setItem('email', body?.email)
+            return {responseJson}
+         }
          if(responseJson?.status === 200){
             window.localStorage.setItem('login_web', JSON.stringify(responseJson));
             return redirect('/dasboard');
@@ -46,10 +49,22 @@ async function ActionRegister(props: LoginActionProps){
        }
     }
     catch(error){
-        return {error}
+        return { error }
     }
-    
-    return bodys;
 }
 
-export { ActionLogin, ActionRegister }
+async function ActionLogout(props: LoginActionProps){
+    const localStorages = window.localStorage.getItem('login_web');
+    props;
+    if(localStorages === null){
+        return redirect('/auth/login');
+    }
+    toast.success('You`ve successfully logged out', {
+        theme: "dark",
+        autoClose: 4000,
+    })
+    window.localStorage.removeItem('login_web');
+    return redirect('/auth/login')
+}
+
+export { ActionLogin, ActionRegister, ActionLogout }

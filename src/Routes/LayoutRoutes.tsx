@@ -1,16 +1,31 @@
 
-import { Outlet, useLoaderData, useRouteLoaderData } from 'react-router-dom';
+import { Outlet, useRouteLoaderData } from 'react-router-dom';
 import Navbar from '../app/Component/Navbar';
-import { AuthContext } from '../app/Context/AuthContext';
+import { AuthContext, Layout } from '../app/Context/AuthContext';
+import React from 'react';
+import { ThemeProvider } from 'react-bootstrap';
+import { SkeletonTheme } from 'react-loading-skeleton';
+import { ToastContainer } from 'react-toastify';
 
-export default function LayoutRoutes(){
+export default function LayoutRoutes() {
     const loader = useRouteLoaderData('autho') as any;
-    return(
+    const [show, setShow] = React.useState({ toogle: false });
+
+    return (
         <>
-           <AuthContext.Provider value={loader}>
-                <Navbar/>
-                <Outlet/>
-           </AuthContext.Provider>
+            <ThemeProvider
+                breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+                minBreakpoint="xxs">
+                <SkeletonTheme baseColor='#313131' highlightColor='#525252'>
+                    <AuthContext.Provider value={loader}>
+                        <Layout.Provider value={{ show, setShow } as any}>
+                            <Navbar />
+                            <Outlet />
+                        </Layout.Provider>
+                    </AuthContext.Provider>
+                </SkeletonTheme>
+            </ThemeProvider>
+            <ToastContainer/>
         </>
     )
 }

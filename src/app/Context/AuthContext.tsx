@@ -2,4 +2,5 @@
 import React from "react"
 const AuthContext = React.createContext(null);
 const SubscriptionContext = React.createContext(null);
-export { AuthContext, SubscriptionContext }
+const Layout      = React.createContext(null);
+export { AuthContext, SubscriptionContext , Layout}

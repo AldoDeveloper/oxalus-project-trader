@@ -17,10 +17,10 @@ export default function BadgesUsers(props: PropsProfiles){
                         <img src={imgs} id="dropdown-basic" width={'35px'} className="rounded-circle" alt="" />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <NavLink to={'/dasboard/profile'} className={'dropdown-item'}>PROFILE</NavLink>
-                        <Dropdown.Item href="#/action-2">LOGOUT</Dropdown.Item>
+                        <NavLink to={'/dasboard/setting'} className={'dropdown-item'}>SETTING</NavLink>
+                        <NavLink to={'/logout'} className={'dropdown-item'}>LOGOUT</NavLink>
                         <Dropdown.Divider/>
-                        <Dropdown.Item href="#/action-3">PAYMENT</Dropdown.Item>
+                        <NavLink to={'/dasboard/subscription'} className={'dropdown-item'}>LOGOUT</NavLink>
                     </Dropdown.Menu>
                 </Dropdown>
             </NavLink>

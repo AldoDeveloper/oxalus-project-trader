@@ -9,14 +9,16 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 
 interface StateFromPayment{
     copy: boolean,
+    redirect: boolean
 }
 
 export default class PaymentIntruction extends React.Component<any, StateFromPayment>{
     public constructor(props: any){
         super(props);
-        this.state = {copy : false};
+        this.state = {copy : false, redirect: false};
         this.RenderComponent = this.RenderComponent.bind(this);
         this.HandleRedirectComponent  = this.HandleRedirectComponent.bind(this);
+        this.BackToDasboard  = this.BackToDasboard.bind(this);
     }
     public componentDidMount(): void {}
 
@@ -27,12 +29,16 @@ export default class PaymentIntruction extends React.Component<any, StateFromPay
         return <this.RenderComponent state={locations.state}/>
     }
 
+    protected BackToDasboard(){
+         this.setState({redirect: true})
+    }
+
     protected RenderComponent(props: {state: any}) : JSX.Element{
         return (
             <Row className='justify-content-center mt-3 text-center'>
                 <Col lg xl xxl sm md>
                     <h2>Transfer Payment Intruction</h2>
-                    <img src={logoTrade} width={'180px'} className='rounded-circle d-block mx-auto' alt="" />
+                    <img src={logoTrade} width={'120px'} className='rounded-circle d-block mx-auto' alt="" />
                     <span>Amount Transfers + Fee</span>
                     <h1>{props.state.status.data.amount.toString().substring(0, 5)} USDT</h1>
                     <p className='text-center text-warning'><Icons.BsExclamationDiamondFill/> Please Make Transfer According to the Nominal stated</p>
@@ -54,7 +60,7 @@ export default class PaymentIntruction extends React.Component<any, StateFromPay
                      {
                         this.state.copy ? <span className='text-danger'>Copied</span> : ''
                      }
-                    <div className='d-flex justify-content-center mb-3 gap-1'>
+                    <div className='d-flex flex-wrap justify-content-center mb-3 gap-1'>
                         <div className='border border-1 rounded p-2'>
                             {props.state?.data.data.payment_processor}
                         </div>
@@ -65,11 +71,13 @@ export default class PaymentIntruction extends React.Component<any, StateFromPay
                             </CopyToClipboard>
                         </div>
                     </div>
+                    <Button onClick={this.BackToDasboard} variant='success' className='text-center mt-4' size='lg'>Back To Dasboard</Button>
                 </Col>
             </Row>
         )
     }
     public render(): React.ReactNode {
+        if(this.state.redirect) return <Navigate to={'/dasboard'}/>
         return  <this.HandleRedirectComponent/>
     }
 }

@@ -1,7 +1,8 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import Country from "../List/Country";
-import { Form as Forms, useActionData } from "react-router-dom";
+import { Form as Forms, Link, Navigate, useActionData } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
 
 export default class Register extends React.Component<any>{
 
@@ -29,6 +30,8 @@ export default class Register extends React.Component<any>{
     }
 
     public render(): React.ReactNode {
+        const auth : any = this.context as any;
+        if(auth?.auth) return <Navigate to={'/dasboard'}/>
         return(
             <>
                 <div style={{ minHeight: '90vh' }} className="mb-3 mt-3 d-flex justify-content-center align-items-center">
@@ -74,9 +77,9 @@ export default class Register extends React.Component<any>{
                                 <input type="checkbox" className='form-check-input' />
                                 <label className="form-check-label">I have read and agree to the</label>
                             </div>
-                            <button type='submit' className='btn btn-outline-theme btn-lg d-block w-100 fw-500 mb-3'>SIGN IN</button>
+                            <button type='submit' className='btn btn-outline-theme btn-lg d-block w-100 fw-500 mb-3'>SIGN UP</button>
                             <div className="text-center text-inverse text-opacity-50">
-                            Already have an Admin ID <a href="page_register.html">Sign up</a>.
+                             Already have an Admin ID <Link to={'/auth/login'}>Sign In</Link>.
                             </div>
                         </Forms>
                    </div>
@@ -85,3 +88,5 @@ export default class Register extends React.Component<any>{
         )
     }
 }
+
+Register.contextType = AuthContext;

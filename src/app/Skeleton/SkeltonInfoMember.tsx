@@ -1,5 +1,5 @@
 
-import { Card, ListGroup } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 import Skelton from  'react-loading-skeleton';
 
 const SkeltonInfoMember = () : JSX.Element =>{

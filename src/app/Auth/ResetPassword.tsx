@@ -2,11 +2,15 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import { ResetPasswordEmail } from "../Api/ApiResource";
 import { LoadingPromise } from "../LoadingPromise/Loading";
+import { AuthContext } from "../Context/AuthContext";
+import { Link, Navigate } from "react-router-dom";
+import {toast} from 'react-toastify';
 
 export default class ResetPassword extends React.Component<any, 
-   { redirect: boolean }>{
+   { redirect: boolean, data: any }>{
     public constructor(props: any){
         super(props);
+        this.state = {redirect: false, data: null}
         this.handleSubmitResetPassword = this.handleSubmitResetPassword.bind(this);
     }
     
@@ -19,8 +23,19 @@ export default class ResetPassword extends React.Component<any,
                 const resetApisFetch = ResetPasswordEmail(body);
                 const loadingFetch   = await LoadingPromise(resetApisFetch, 'Error Reset Password');
                 if(loadingFetch.status === 200){
+                    toast.success('Reset Password Success', {
+                        theme: 'dark',
+                        autoClose: 3000,
+                    })
                     this.setState({redirect: true});
-                    console.log(await loadingFetch.json())
+                }
+
+                if(loadingFetch.status >= 400){
+                    const response = await loadingFetch.json();
+                    toast.error(response?.message, {
+                        theme: 'dark',
+                        autoClose: 3000,
+                    })
                 }
             }catch(error){
                 console.log(error)
@@ -29,6 +44,9 @@ export default class ResetPassword extends React.Component<any,
     }
 
     public render(): React.ReactNode {
+        const auth : any = this.context as any;
+        if(auth?.auth) return <Navigate to={'/dasboard'}/>
+        if(this.state.redirect) return <Navigate to={'/auth/login'}/>
         return(
             <>
                 <div 
@@ -54,7 +72,7 @@ export default class ResetPassword extends React.Component<any,
                                 RESET PASSWORD
                             </button>
                             <div className="text-center text-inverse text-opacity-50">
-                                Don't have an account yet? <a href="page_register.html">Sign In</a>.
+                                Don't have an account yet? <Link to={'/auth/login'}>Sign In</Link>.
                             </div>
                         </div>
                     </Form>
@@ -63,3 +81,5 @@ export default class ResetPassword extends React.Component<any,
         )
     }
 }
+
+ResetPassword.contextType = AuthContext;
